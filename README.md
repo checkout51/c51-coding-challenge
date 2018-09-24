@@ -15,3 +15,10 @@ The file contains a list of offers and their attributes. Each row in the list mu
 You can consume the list as file resource from the app or host it on a network using a simple service like “http://myjson.com/”. 
 
 Feel free to build it in any way you want using any framework, architecture and tools at your disposal. Depending on your skills you can write in Java, Kotlin or a combination of both. Bonus points if you create a way for a user to sort the offers by name or cash back.
+
+
+# Response Directions
+
+1. Use settings to update myjson host
+2. With no network or no host, will fallback to file in assets for json
+3. Minimal tests are include for patterns
