@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/offer_item_height"
+    android:elevation="@dimen/offer_item_elevation"
+    android:layout_marginBottom="@dimen/offer_item_margin"
+    android:layout_marginTop="@dimen/offer_item_margin">
+
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/offer_image"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:minWidth="@dimen/offer_item_height"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/offer_title"
+            style="@style/OfferItemHeadline"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/offer_item_text_margin"
+            android:layout_marginEnd="@dimen/offer_item_text_margin"
+            app:layout_constraintLeft_toRightOf="@id/offer_image"
+            app:layout_constraintRight_toLeftOf="@id/add_icon"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/offer_cash_back"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:layout_constraintHorizontal_bias="0.0"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textAlignment="textStart"/>
+
+        <TextView
+            android:id="@+id/offer_cash_back"
+            style="@style/OfferItemCashBack"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/offer_item_text_margin"
+            app:layout_constraintLeft_toRightOf="@id/offer_image"
+            app:layout_constraintRight_toLeftOf="@id/add_icon"
+            android:layout_marginEnd="@dimen/offer_item_text_margin"
+            app:layout_constraintTop_toBottomOf="@id/offer_title"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:layout_constraintHorizontal_bias="0.0"
+            android:maxLines="1"
+            android:textAlignment="textStart"/>
+
+        <ImageView
+            android:id="@+id/add_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingTop="@dimen/add_icon_padding"
+            android:paddingBottom="@dimen/add_icon_padding"
+            android:minWidth="@dimen/offer_item_height"
+            android:scaleType="fitCenter"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:src="@drawable/icons8_plus_math_96"/>
+    </android.support.constraint.ConstraintLayout>
+</android.support.v7.widget.CardView>
