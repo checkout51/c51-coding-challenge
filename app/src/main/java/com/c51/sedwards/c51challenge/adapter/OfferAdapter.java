@@ -29,7 +29,7 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferViewHol
             .fallback(R.drawable.icons8_wallpaper_96)
             .fitCenter()
             .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
-    private static final Comparator<? super Offer> CASH_BACK_COMPARATOR = new Comparator<Offer>() {
+    public static final Comparator<? super Offer> CASH_BACK_COMPARATOR = new Comparator<Offer>() {
 
         @Override
         public int compare(Offer offer, Offer offer2) {
@@ -48,7 +48,7 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferViewHol
         }
     };
 
-    private static final Comparator<? super Offer> NAME_COMPARATOR = new Comparator<Offer>() {
+    public static final Comparator<? super Offer> NAME_COMPARATOR = new Comparator<Offer>() {
 
         @Override
         public int compare(Offer offer, Offer offer2) {
@@ -64,6 +64,10 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferViewHol
 
     public OfferAdapter(List<Offer> offers) {
         mOffers = offers;
+    }
+
+    public List<Offer> getOffers() {
+        return mOffers;
     }
 
     private void setData(final List<Offer> offers) {
@@ -165,6 +169,7 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferViewHol
                 //TODO: Add to selected offers
             }
         });
+        holder.itemView.setContentDescription(offer.getName());
     }
 
     /**

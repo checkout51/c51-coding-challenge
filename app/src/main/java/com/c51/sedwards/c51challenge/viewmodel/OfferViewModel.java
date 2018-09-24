@@ -4,9 +4,13 @@ import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 
+import com.c51.sedwards.c51challenge.R;
 import com.c51.sedwards.c51challenge.model.OfferList;
 import com.google.gson.Gson;
 
@@ -51,8 +55,10 @@ public class OfferViewModel extends ViewModel {
     }
 
     private void fetchOffers() {
+        final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mApplication.getApplicationContext());
+        final String url = sharedPref.getString(mApplication.getResources().getString(R.string.pref_host_url), mApplication.getResources().getString(R.string.pref_default_host_url));
         //live data updates will be posted to observables here
-        new FetchOfferTask(mApplication, mOfferList).execute(JSON_URL);
+        new FetchOfferTask(mApplication, mOfferList).execute(url);
     }
 
 
@@ -72,9 +78,15 @@ public class OfferViewModel extends ViewModel {
         public FetchOfferTask(@NonNull Application app,@NonNull MutableLiveData<OfferList> offerListLiveData) {
             mApp = new WeakReference<>(app);
             mOfferListLiveData = new WeakReference<>(offerListLiveData);
-            //4kb cache should be enough
-            mHttpClient = new OkHttpClient.Builder()
-                    .cache(new Cache(app.getCacheDir(), 4*1024)).build();
+            if (null != app.getCacheDir()) {
+                //4kb cache should be enough
+                mHttpClient = new OkHttpClient.Builder()
+                        .cache(new Cache(app.getCacheDir(), 4*1024)).build();
+            } else {
+                //no cache! (helps for testing)
+                mHttpClient = new OkHttpClient.Builder().build();
+            }
+
         }
         @Override
         protected Void doInBackground(String... requests) {

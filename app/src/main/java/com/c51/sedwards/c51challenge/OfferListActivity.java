@@ -2,28 +2,25 @@ package com.c51.sedwards.c51challenge;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -88,7 +85,7 @@ public class OfferListActivity extends AppCompatActivity
         mUiHandler = new UiUpdateHandler(this);
 
         //Get Shared Preferences
-        mSharedPreferences = getSharedPreferences(getString(R.string.c51_shared_prefs), Context.MODE_PRIVATE);
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         initializeApplicationViews();
     }
@@ -112,16 +109,15 @@ public class OfferListActivity extends AppCompatActivity
                     .putString(getString(R.string.pref_sort_type), SortType.NONE.name())
                     .apply();
         }
-        if (!mSharedPreferences.contains(getString(R.string.pref_host_url))) {
-            mSharedPreferences.edit()
-                    .putString(getString(R.string.pref_host_url), OfferViewModel.JSON_URL)
-                    .apply();
-        }
         final String sort = mSharedPreferences.getString(getString(R.string.pref_sort_type), SortType.NONE.name());
         final SortType type = SortType.valueOf(sort);
         updateSortUi(type);
     }
 
+    /**
+     * Show the correct feedback for current sorting situation
+     * @param type type of the sort that is active
+     */
     private void updateSortUi(SortType type) {
         switch (type) {
             case CASH_BACK:
@@ -154,8 +150,6 @@ public class OfferListActivity extends AppCompatActivity
                         .setAction("Action", null).show();
             }
         });
-
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
