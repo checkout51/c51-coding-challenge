@@ -13,9 +13,13 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.c51.sedwards.c51challenge.OfferListActivity;
 import com.c51.sedwards.c51challenge.R;
 import com.c51.sedwards.c51challenge.model.Offer;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferViewHolder> {
@@ -25,6 +29,36 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferViewHol
             .fallback(R.drawable.icons8_wallpaper_96)
             .fitCenter()
             .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+    private static final Comparator<? super Offer> CASH_BACK_COMPARATOR = new Comparator<Offer>() {
+
+        @Override
+        public int compare(Offer offer, Offer offer2) {
+            if (null != offer && null != offer2) {
+                float diff = offer2.getCashBack() - offer.getCashBack();
+                if (diff > 0) {
+                    return 1;
+                } else if (diff == 0) {
+                    return 0;
+                } else {
+                    return -1;
+                }
+            } else {
+                return 0;
+            }
+        }
+    };
+
+    private static final Comparator<? super Offer> NAME_COMPARATOR = new Comparator<Offer>() {
+
+        @Override
+        public int compare(Offer offer, Offer offer2) {
+            if (null != offer && null != offer2) {
+                return offer.getName().compareTo(offer2.getName());
+            } else {
+                return 0;
+            }
+        }
+    };
 
     private List<Offer> mOffers;
 
@@ -32,7 +66,7 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferViewHol
         mOffers = offers;
     }
 
-    public void setData(final List<Offer> offers) {
+    private void setData(final List<Offer> offers) {
         final DiffUtil.DiffResult result = DiffUtil.calculateDiff(new DiffUtil.Callback() {
             @Override
             public int getOldListSize() {
@@ -141,6 +175,38 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferViewHol
     @Override
     public int getItemCount() {
         return null != mOffers ? mOffers.size() : 0;
+    }
+
+    /**
+     * Sort the existing data already in adapter
+     * @param sortType
+     */
+    public void sort(OfferListActivity.SortType sortType) {
+        if (null != mOffers) {
+            sort(sortType, new ArrayList<Offer>(mOffers));
+        }
+    }
+
+    /**
+     * Sort a new set of data coming in
+     * @param sortType
+     * @param offers
+     */
+    public void sort(OfferListActivity.SortType sortType, List<Offer> offers) {
+        if (null == offers) {
+            //empty
+            offers = new ArrayList<>();
+        }
+        switch (sortType) {
+            case CASH_BACK:
+                Collections.sort(offers, CASH_BACK_COMPARATOR);
+                break;
+            case NAME:
+                Collections.sort(offers, NAME_COMPARATOR);
+                break;
+        }
+        //so we run the diff
+        setData(offers);
     }
 
     class OfferViewHolder extends RecyclerView.ViewHolder {
