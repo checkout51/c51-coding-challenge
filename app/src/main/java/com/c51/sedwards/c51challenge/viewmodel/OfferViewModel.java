@@ -44,9 +44,9 @@ public class OfferViewModel extends ViewModel {
      */
     public LiveData<OfferList> getOffers() {
         if (null == mOfferList) {
-            mOfferList = new MutableLiveData<OfferList>();
-            fetchOffers();
+            mOfferList = new MutableLiveData<>();
         }
+        fetchOffers();
         return mOfferList;
     }
 

@@ -6,15 +6,26 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.c51.sedwards.c51challenge.R;
 import com.c51.sedwards.c51challenge.model.Offer;
 
 import java.util.List;
 
 public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferViewHolder> {
+    public static final RequestOptions DEFAULT_REQUEST_OPTIONS = new RequestOptions()
+            .error(R.drawable.icons8_wallpaper_96)
+            .placeholder(R.drawable.icons8_image_file_96)
+            .fallback(R.drawable.icons8_wallpaper_96)
+            .fitCenter()
+            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+
     private List<Offer> mOffers;
 
     public OfferAdapter(List<Offer> offers) {
@@ -22,7 +33,6 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferViewHol
     }
 
     public void setData(final List<Offer> offers) {
-        mOffers = offers;
         final DiffUtil.DiffResult result = DiffUtil.calculateDiff(new DiffUtil.Callback() {
             @Override
             public int getOldListSize() {
@@ -36,16 +46,20 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferViewHol
 
             @Override
             public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-                return mOffers.get(oldItemPosition).equals(offers.get(newItemPosition));
+                return mOffers.get(oldItemPosition).getOfferId().equals(offers.get(newItemPosition).getOfferId());
             }
 
             @Override
             public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-                //Assuming ids are unique we can guarantee with just the id
-                return mOffers.get(oldItemPosition).getOfferId()
-                        .equals(offers.get(newItemPosition).getOfferId());
+                final Offer oldOffer = mOffers.get(oldItemPosition);
+                final Offer newOffer = offers.get(newItemPosition);
+                return oldOffer.getImageUrl()
+                        .equals(newOffer.getImageUrl()) &&
+                        oldOffer.getCashBack() == newOffer.getCashBack() &&
+                        oldOffer.getName().equals(newOffer.getName());
             }
         });
+        mOffers = offers;
         result.dispatchUpdatesTo(this);
     }
     /**
@@ -101,6 +115,22 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferViewHol
         }
         final Offer offer = mOffers.get(position);
         holder.mTitleText.setText(offer.getName());
+        holder.mCashBackText.setText(holder.mCashBackText.getResources()
+                .getString(R.string.cash_back, offer.getCashBack()));
+        Glide.with(holder.mIconImage)
+                .applyDefaultRequestOptions(DEFAULT_REQUEST_OPTIONS)
+                .load(offer.getImageUrl())
+                .into(holder.mIconImage);
+
+        if (holder.itemView.hasOnClickListeners()) {
+            holder.itemView.setOnClickListener(null);
+        }
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO: Add to selected offers
+            }
+        });
     }
 
     /**
@@ -114,11 +144,16 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferViewHol
     }
 
     class OfferViewHolder extends RecyclerView.ViewHolder {
-        protected TextView mTitleText;
+        TextView mTitleText;
+        ImageView mIconImage;
+        TextView mCashBackText;
 
-        public OfferViewHolder(View itemView) {
+        OfferViewHolder(View itemView) {
             super(itemView);
             mTitleText = itemView.findViewById(R.id.offer_title);
+            mIconImage = itemView.findViewById(R.id.offer_image);
+            mCashBackText = itemView.findViewById(R.id.offer_cash_back);
         }
     }
+
 }
