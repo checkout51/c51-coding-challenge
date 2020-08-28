@@ -32,8 +32,7 @@ We're primarily a PHP shop and we take web application architecture seriously. W
 3. Repository pattern
 4. Unit Testing
 5. Documentation with an overview of your solution, including any instructions on how to run it.
-6. Bonus points For:
-    a. Setting up a working SQL database, along with database deployment scripts
+6. Bonus points for setting up a working SQL database, along with database deployment scripts
 7. Double bonus points for a solution that does all of the above with minimal set up instructions. Ideally, we run one command from within your code base to deloy and run your app.
    
 
