@@ -26,7 +26,7 @@ Depending on your skills you can write in Java, Kotlin or a combination of both.
 Our app was originally written in Objective-C and recent work is being done to port the codebase gradually over to Swift.  Feel free to write your solution in whatever language works best for you.
 
 ## Full-Stack Specifics
-We're primarily a PHP shop that takes web application architecture seriously. We are looking for the following in the implementation.
+We're primarily a PHP shop and we take web application architecture seriously. We are looking for the following in the implementation.  
 1. Understanding of MVC architecture
 2. Dependency Injection
 3. Repository pattern
