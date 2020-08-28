@@ -26,7 +26,16 @@ Depending on your skills you can write in Java, Kotlin or a combination of both.
 Our app was originally written in Objective-C and recent work is being done to port the codebase gradually over to Swift.  Feel free to write your solution in whatever language works best for you.
 
 ## Full-Stack Specifics
-We're primarily a PHP shop, but we are starting to think about moving away from PHP. PHP is still the preferred technology for this assignment, but we have components written in React.js, Node.js and Java, so feel free to mix these technologies in as you see fit.  Our minimal expectation is that there are some server side components in your solution.  The front end can be rendered on the client side or server side, its entirely up to you.  If you are applying for a senior or lead developer position, submissions that run in a docker container will be heavily favored.
+We're primarily a PHP shop that takes web application architecture seriously. We are looking for the following in the implementation.
+1. Understanding of MVC architecture
+2. Dependency Injection
+3. Repository pattern
+4. Unit Testing
+5. Documentation with an overview of your solution, including any instructions on how to run it.
+6. Bonus points For:
+    a. Setting up a working SQL database, along with database deployment scripts
+7. Double bonus points for a solution that does all of the above with minimal set up instructions. Ideally, we run one command from within your code base to deloy and run your app.
+   
 
 
 
