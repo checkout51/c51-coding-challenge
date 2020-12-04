@@ -16,7 +16,7 @@ You can consume the list as file resource from the app or host it on a network u
 
 Feel free to build it in any way you want using any framework, architecture and tools at your disposal. Bonus points if you create a way for a user to sort the offers by name or cash back.
 
-You are only required to build the front end application
+You are only required to build the front end application that's relevant to the job you are applying for.
 
 This is a relatively simple app, however we are looking for more than just the task to be completed.  At Checkout 51, we take the craftmanship of the code seriously, and want to see evidence that you do as well.  We are looking for software that is well structured, concise and testable.
 
